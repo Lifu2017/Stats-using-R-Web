@@ -1,0 +1,192 @@
+---
+title: import csv, txt, excel files
+author: Li Fu
+date: '2019-10-10'
+slug: import-csv-txt-excel-files
+categories:
+  - functions
+tags:
+  - import and output
+---
+
+
+
+<div id="import-csv" class="section level1">
+<h1>import csv</h1>
+<div id="method1-choose-file-location-manually" class="section level2">
+<h2>Method1: choose file location manually</h2>
+<pre class="r"><code>My.data &lt;- read.csv(file.choose(), header = T)</code></pre>
+</div>
+<div id="method2-set-working-directory-then-select-file-by-file-name" class="section level2">
+<h2>Method2: set working directory, then select file by file name</h2>
+<ol style="list-style-type: decimal">
+<li>get woring directory</li>
+</ol>
+<pre class="r"><code>getwd()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>change working directory to folder where your r file locates
+<p>
+Method1: click: “Session” - “Set Working Directory” - “Set Source File Location”
+</p>
+<p>
+Method2: use code below
+</p></li>
+</ol>
+<pre class="r"><code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>load in file from your working directory
+<p>
+PS: this file is downloaded from yahoo finance, only for education use
+</p></li>
+</ol>
+<pre class="r"><code>My.data &lt;- read.csv(&quot;./MSFT.csv&quot;)</code></pre>
+<p>“./” means file location from system to your working directory.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>check do we load in correctly
+<p>
+Method1: If correctly, it will show in Environment(right hand side of RStudio)
+</p>
+<p>
+Methods2: check header of the data frame
+</p></li>
+</ol>
+<pre class="r"><code>head(My.data, n = 5)</code></pre>
+<pre><code>##         Date   Open   High    Low  Close Adj.Close   Volume
+## 1 2018-10-10 111.24 111.50 105.79 106.16  104.5176 61376300
+## 2 2018-10-11 105.35 108.93 104.20 105.91  104.2715 63904300
+## 3 2018-10-12 109.01 111.24 107.12 109.57  107.8749 47742100
+## 4 2018-10-15 108.91 109.48 106.95 107.60  105.9353 32068100
+## 5 2018-10-16 109.54 111.41 108.95 111.00  109.2827 31610200</code></pre>
+<p>this function checks the first n row of My.data, if not given, by default, n = 6</p>
+<p>Symmetrically, another function check last n rows, also, by default n = 6:</p>
+<pre class="r"><code>tail(My.data, n = 3)</code></pre>
+<pre><code>##           Date   Open    High    Low  Close Adj.Close   Volume
+## 250 2019-10-08 137.08 137.760 135.62 135.67    135.67 25550500
+## 251 2019-10-09 137.46 138.700 136.97 138.24    138.24 19749900
+## 252 2019-10-10 138.49 139.665 138.25 139.10    139.10 15572941</code></pre>
+</div>
+<div id="notice-parameters-for-read.csv" class="section level2">
+<h2>NOTICE: Parameters for read.csv</h2>
+<p>full parameters are:</p>
+<pre class="r"><code>read.csv(file = &quot;./MSFT.csv&quot;,
+         header = T,
+         sep = &quot;,&quot;,
+         quote = &quot;\&quot;&quot;,
+         dec = &quot;.&quot;,
+         fill = TRUE,
+         comment.char = &quot;&quot;)</code></pre>
+<div id="header-t" class="section level3">
+<h3>header = T</h3>
+<pre class="r"><code>head(read.csv(&quot;./MSFT.csv&quot;, header = T), n = 3)</code></pre>
+<pre><code>##         Date   Open   High    Low  Close Adj.Close   Volume
+## 1 2018-10-10 111.24 111.50 105.79 106.16  104.5176 61376300
+## 2 2018-10-11 105.35 108.93 104.20 105.91  104.2715 63904300
+## 3 2018-10-12 109.01 111.24 107.12 109.57  107.8749 47742100</code></pre>
+<p>
+1,2,3 means row numbers
+</p>
+<p>
+because in row 1, data is numeric for column 2-7, so data frame structure for column 2-7 are numeric, see below:
+</p>
+<pre class="r"><code>str(read.csv(&quot;./MSFT.csv&quot;, header = T))</code></pre>
+<pre><code>## &#39;data.frame&#39;:    252 obs. of  7 variables:
+##  $ Date     : Factor w/ 252 levels &quot;2018-10-10&quot;,&quot;2018-10-11&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Open     : num  111 105 109 109 110 ...
+##  $ High     : num  112 109 111 109 111 ...
+##  $ Low      : num  106 104 107 107 109 ...
+##  $ Close    : num  106 106 110 108 111 ...
+##  $ Adj.Close: num  105 104 108 106 109 ...
+##  $ Volume   : int  61376300 63904300 47742100 32068100 31610200 26548200 32506200 32785500 26545600 43770400 ...</code></pre>
+</div>
+<div id="header-f" class="section level3">
+<h3>header = F</h3>
+<pre class="r"><code>head(read.csv(&quot;./MSFT.csv&quot;, header = F), n = 3)</code></pre>
+<pre><code>##           V1         V2         V3         V4         V5         V6
+## 1       Date       Open       High        Low      Close  Adj Close
+## 2 2018-10-10 111.239998 111.500000 105.790001 106.160004 104.517632
+## 3 2018-10-11 105.349998 108.930000 104.199997 105.910004 104.271507
+##         V7
+## 1   Volume
+## 2 61376300
+## 3 63904300</code></pre>
+<p>
+Now, row1 is header, so it is character, so column 2-7 becomes factor
+</p>
+<pre class="r"><code>str(read.csv(&quot;./MSFT.csv&quot;, header = F))</code></pre>
+<pre><code>## &#39;data.frame&#39;:    253 obs. of  7 variables:
+##  $ V1: Factor w/ 253 levels &quot;2018-10-10&quot;,&quot;2018-10-11&quot;,..: 253 1 2 3 4 5 6 7 8 9 ...
+##  $ V2: Factor w/ 247 levels &quot;100.099998&quot;,&quot;101.290001&quot;,..: 247 85 31 70 68 75 88 79 69 72 ...
+##  $ V3: Factor w/ 243 levels &quot;100.190002&quot;,&quot;100.690002&quot;,..: 243 82 60 77 66 80 84 68 71 69 ...
+##  $ V4: Factor w/ 239 levels &quot;100.110001&quot;,&quot;100.440002&quot;,..: 239 45 23 59 58 70 75 63 65 66 ...
+##  $ V5: Factor w/ 241 levels &quot;100.389999&quot;,&quot;100.559998&quot;,..: 241 40 36 74 58 82 79 66 69 75 ...
+##  $ V6: Factor w/ 244 levels &quot;100.045013&quot;,&quot;100.371323&quot;,..: 244 34 30 69 50 76 75 61 63 70 ...
+##  $ V7: Factor w/ 253 levels &quot;111242100&quot;,&quot;13629300&quot;,..: 253 245 248 232 178 176 128 182 185 127 ...</code></pre>
+</div>
+<div id="csv-file" class="section level3">
+<h3>csv file:</h3>
+<pre class="r"><code>sep = &quot;,&quot;</code></pre>
+</div>
+<div id="txt-file" class="section level3">
+<h3>txt file:</h3>
+<pre class="r"><code>sep = &quot; &quot;</code></pre>
+</div>
+<div id="escapye-quotes" class="section level3">
+<h3>escapye quotes</h3>
+<p>
+rarely used in data input,but very useful for parsing data.
+</p>
+<pre class="r"><code>quote = &quot;\&quot;&quot;,
+
+\&#39;  ASCII apostrophe &#39;
+\&quot;  ASCII quotation mark &quot;
+\n  newline
+\r  carriage return
+\t  tab
+\b  backspace</code></pre>
+<p>
+<p>for more information visit: <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html</a></p>
+</div>
+<div id="some-bizzar-country-use-71908-represent-71.908" class="section level3">
+<h3>some bizzar country use 71,908 represent 71.908</h3>
+<pre class="r"><code>dec = &quot;,&quot;</code></pre>
+</div>
+<div id="for-regular-number-71.908" class="section level3">
+<h3>for regular number 71.908</h3>
+<p>usually you don’t need to set this parameter, by default is “.”</p>
+<pre class="r"><code>dec = &quot;.&quot;</code></pre>
+</div>
+</div>
+</div>
+<div id="import-txt" class="section level1">
+<h1>import txt</h1>
+<p>the only difference from import csv is change separation from comma to tab.</p>
+<p>
+data source: <a href="http://www.applied-maths.com/download/sample-data" class="uri">http://www.applied-maths.com/download/sample-data</a>
+</p>
+<p>Antibiotics sample data - MIC data.txt</p>
+<pre class="r"><code>read.csv(file = &quot;./MIC data.txt&quot;, sep=&quot;\t&quot;)</code></pre>
+<pre><code>##      KEY  AMP  CTT CFD ERT   TIC
+## 1 IS0001  &lt;=8 &lt;=16 &lt;=1 &lt;=2  &lt;=16
+## 2 IS0002   16   32   2   4    32
+## 3 IS0003  &lt;=8   32   2   4    64
+## 4 IS0004   16 &lt;=16   2 &gt;=8    64
+## 5 IS0005 &gt;=32 &gt;=64 &gt;=4 &gt;=8 &gt;=128
+## 6 IS0006   16   32   2 &lt;=2  &lt;=16</code></pre>
+</div>
+<div id="import-xlx-xlsx" class="section level1">
+<h1>import xlx, xlsx</h1>
+<p>use a package</p>
+<p>
+install
+</p>
+<pre class="r"><code>install.packages(&quot;xlsx&quot;)</code></pre>
+<p>load</p>
+<pre class="r"><code>library(&quot;xlsx&quot;)</code></pre>
+<p>
+data source: <a href="http://www.applied-maths.com/download/sample-data" class="uri">http://www.applied-maths.com/download/sample-data</a>
+</p>
+<p>Antibiotics sample data - Zone diameter data.xls</p>
+<pre class="r"><code>read.xlsx(file = &quot;Zone diameter data.xls&quot;,header = T)</code></pre>
+<p>this package doesn’t work on R Studio of mac, I don’t know why, i don’t like those technical problems,AHHHHHHHHHHHHHHHH, there is one post online might help you, but i failed based on his method, good luck:
+<a href="https://zhiyzuo.github.io/installation-rJava/" class="uri">https://zhiyzuo.github.io/installation-rJava/</a></p>
+</div>

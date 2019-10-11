@@ -1,0 +1,29 @@
+---
+title: Install R and RStudio
+author: Li Fu
+date: '2019-10-10'
+slug: install-r-and-rstudio
+categories:
+  - R
+tags: []
+---
+
+## 1. Download R
+Download R from this site (I choose the first URL in US, just for convenience, technically they are all the same):
+https://cran.cnr.berkeley.edu
+
+Download based on your system: Windows/IOS/Linux
+
+Then install.
+
+## 2. Download RStudio
+From here:
+https://rstudio.com/products/rstudio/download/
+
+choose the first one, free.
+
+Then install. 
+
+### Now you are ready to go!
+
+

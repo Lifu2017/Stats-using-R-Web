@@ -1,0 +1,48 @@
+---
+title: Descriptive Statistics
+author: Li Fu
+date: '2019-10-11'
+slug: descriptive-statistics
+categories:
+  - Descriptive Statistics
+tags:
+  - mean
+  - variance
+---
+
+Finally begin about statistics stuff, today is the beginning pages of any statistics textbooks.
+
+<p>keep using the dataset trees, no special reason, I just lazy to find dataset, they are all similar.</p>
+
+## make a data frame first
+```{r}
+df <- trees
+```
+
+summary all three columns
+```{r}
+summary(df)
+```
+
+### skewness
+add skewwness math function here 
+```{r}
+
+```
+
+
+## kurtosis
+```{r}
+
+```
+
+
+### Mode: the most frequently occuring value among all the observations in a sample
+```{r}
+
+```
+
+```{r}
+
+```
+

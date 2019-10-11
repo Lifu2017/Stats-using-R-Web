@@ -1,0 +1,170 @@
+---
+title: Data Frame Manipulation
+author: Li Fu
+date: '2019-10-10'
+slug: Data Frame manipulation
+categories:
+  - Stats 101
+tags:
+  - mean
+  - variance
+---
+Last post made me very sad, waste 2 hours about package"xlsx" still failed, very frustrated.
+
+<p>Okay, this post is basic idea of data frame manipulation, terminal command lines is too difficult for me.</p>
+
+### get sample dataset from R
+
+R has sample dataset in package ‘datasets’, following line will return the list of those dataset.
+   
+```{r, warning=FALSE, eval=FALSE}
+data()
+```
+
+### load in data
+I'm gonna use this one: trees, Diameter, Height and Volume for Black CherryTrees
+
+```{r}
+## it seems this line has no meaning, we don't really need it
+data("trees")
+```
+
+### data overview
+```{r}
+## save as a data frame
+df <- trees
+
+## check structure of df
+head(df)
+```
+dimension of df
+```{r}
+dim(df)
+```
+
+row number= 31, column number = 3.
+
+<p>data fromat</p>
+```{r}
+
+str(df)
+```
+all three columns are numerical 
+
+### column names
+```{r}
+colnames(df)
+```
+### row names
+```{r}
+rownames(df)
+```
+Sometimes, some dataset has row names
+
+
+### select one row
+select row 1
+```{r}
+df[1,]
+```
+
+### select multiple rows
+select row 1 and 3
+```{r}
+df[c(1,3),]
+```
+
+### select one column
+select column1
+<em><p>METHOD1:</P></em>
+```{r}
+df[,1]
+```
+
+<em><p>METHOD2:</P></em>
+```{r}
+df$Girth
+```
+
+### select multiple columns
+select column 1 and column 2
+```{r, results='hide'}
+df[,c(1,2)]
+```
+
+### delete one row with row number
+delete row 5
+```{r, results='hide'}
+df[-5,]
+```
+
+### delete multiple row with row number
+delete row 5,8,12,24
+```{r, results='hide'}
+df[-c(5,8,12,24),]
+```
+
+### delete the first 10 rows
+```{r, results='hide'}
+tail(df,nrow(df)-10)
+```
+
+
+### delete the last 10 rows
+```{r, results='hide'}
+head(df,nrow(df)-10)
+```
+
+### keep rows which column Girth > 12
+```{r}
+df[which(df$Girth > 12),]
+```
+
+### keep rows which column Girth > 12 and < 15 
+```{r}
+df$Girth >12
+df$Girth < 15
+df[df$Girth >12 & df$Girth < 15,]
+```
+
+
+### keep rows which column Girth < 10 or > 18 
+```{r}
+df[df$Girth < 10 | df$Girth > 18 ,]
+```
+
+
+### sort by column2: Height, increasing
+```{r, eval=FALSE}
+df[order(df$Height)] 
+```
+
+
+### sort by column2: Height, decreasing
+```{r, eval=FALSE}
+df[order(df$Height),decreasing = TRUE] 
+```
+
+
+### build a new data frame, nrow = 5, ncol = 3
+```{r}
+new.df <- data.frame(matrix(NA, nrow = 5, ncol = 3))
+new.df
+```
+
+### set column names for new.df
+```{r}
+colnames(new.df) <- paste("col", seq(1,3),sep  = "_")
+new.df
+```
+
+### merge df and new.df by row 
+make sure column names are the same 
+```{r}
+colnames(new.df) <- colnames(df)
+rbind(df, new.df)
+```
+
+
+There are many aspects of data frame manipulation, it is foundation of data analysis, many resources are online for unique quesitions. This page is just some basic functions. 
+If you have any questions, welcome to contact me: fli105@syr.edu

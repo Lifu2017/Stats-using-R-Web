@@ -1,0 +1,158 @@
+---
+title: import csv, txt, excel files
+author: Li Fu
+date: '2019-10-10'
+slug: import-csv-txt-excel-files
+categories:
+  - functions
+tags:
+  - import and output
+---
+
+# import csv
+## Method1: choose file location manually 
+```{r,eval=FALSE}
+My.data <- read.csv(file.choose(), header = T)
+```
+
+
+
+## Method2: set working directory, then select file by file name
+1. get woring directory
+```{r,results='hide'}
+getwd()
+```
+
+2. change working directory to folder where your r file locates
+<p> Method1: click: "Session" - "Set Working Directory" - "Set Source File Location"</p>
+<p> Method2: use code below </p>
+
+```{r,eval=FALSE}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+```
+
+3. load in file from your working directory
+<p>PS: this file is downloaded from yahoo finance, only for education use</p>
+```{r, results='hide'}
+My.data <- read.csv("./MSFT.csv")
+```
+"./" means file location from system to your working directory.
+
+4. check do we load in correctly 
+<p>Method1: If correctly, it will show in Environment(right hand side of RStudio)</p>
+<p>Methods2: check header of the data frame</p>
+```{r}
+head(My.data, n = 5)
+```
+
+this function checks the first n row of My.data, if not given, by default, n = 6
+
+Symmetrically, another function check last n rows, also, by default n = 6:
+```{r}
+tail(My.data, n = 3)
+```
+
+## NOTICE: Parameters for read.csv
+full parameters are: 
+```{r,eval=FALSE}
+read.csv(file = "./MSFT.csv",
+         header = T,
+         sep = ",",
+         quote = "\"",
+         dec = ".",
+         fill = TRUE,
+         comment.char = "")
+```
+
+### header = T 
+```{r}
+head(read.csv("./MSFT.csv", header = T), n = 3)
+```
+<p>1,2,3 means row numbers</p>
+
+<p>because in row 1, data is numeric for column 2-7, so data frame structure for column 2-7 are numeric, see below: </p>
+
+```{r}
+str(read.csv("./MSFT.csv", header = T))
+```
+
+### header = F
+```{r}
+head(read.csv("./MSFT.csv", header = F), n = 3)
+```
+
+<p> Now, row1 is header, so it is character, so column 2-7 becomes factor </p>
+
+```{r}
+str(read.csv("./MSFT.csv", header = F))
+```
+
+### csv file:
+```{r, eval=FALSE}
+sep = ","
+```
+
+### txt file:
+```{r, eval=FALSE}
+sep = " "
+```
+
+### escapye quotes
+<p>rarely used in data input,but very useful for parsing data. </p>
+```{r, eval=FALSE}
+quote = "\"",
+
+\'	ASCII apostrophe '
+\"	ASCII quotation mark "
+\n	newline
+\r	carriage return
+\t	tab
+\b	backspace
+
+```
+<p> for more information visit:  https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html
+
+
+### some bizzar country use 71,908 represent 71.908
+```{r, eval=FALSE}
+dec = ","
+```
+
+### for regular number 71.908
+usually you don't need to set this parameter, by default is "."
+```{r, eval=FALSE}
+dec = "."
+```
+
+# import txt
+the only difference from import csv is change separation from comma to tab.
+
+<p> data source: http://www.applied-maths.com/download/sample-data</p>
+Antibiotics sample data - MIC data.txt
+```{r}
+read.csv(file = "./MIC data.txt", sep="\t")
+```
+
+
+# import xlx, xlsx
+use a package 
+
+<p>install</p>
+```{r, eval=FALSE}
+install.packages("xlsx")
+```
+
+ load 
+```{r, eval=FALSE}
+library("xlsx")
+```
+
+<p> data source: http://www.applied-maths.com/download/sample-data</p>
+Antibiotics sample data - Zone diameter data.xls
+
+```{r,eval=FALSE}
+read.xlsx(file = "Zone diameter data.xls",header = T)
+```
+
+this package doesn't work on R Studio of mac, I don't know why, i don't like those technical problems,AHHHHHHHHHHHHHHHH, there is one post online might help you, but i failed based on his method, good luck:
+https://zhiyzuo.github.io/installation-rJava/

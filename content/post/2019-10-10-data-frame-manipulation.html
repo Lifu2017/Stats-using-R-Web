@@ -1,0 +1,256 @@
+---
+title: Data Frame Manipulation
+author: Li Fu
+date: '2019-10-10'
+slug: Data Frame manipulation
+categories:
+  - Stats 101
+tags:
+  - mean
+  - variance
+---
+
+
+
+<p>Last post made me very sad, waste 2 hours about package“xlsx” still failed, very frustrated.</p>
+<p>
+Okay, this post is basic idea of data frame manipulation, terminal command lines is too difficult for me.
+</p>
+<div id="get-sample-dataset-from-r" class="section level3">
+<h3>get sample dataset from R</h3>
+<p>R has sample dataset in package ‘datasets’, following line will return the list of those dataset.</p>
+<pre class="r"><code>data()</code></pre>
+</div>
+<div id="load-in-data" class="section level3">
+<h3>load in data</h3>
+<p>I’m gonna use this one: trees, Diameter, Height and Volume for Black CherryTrees</p>
+<pre class="r"><code>## it seems this line has no meaning, we don&#39;t really need it
+data(&quot;trees&quot;)</code></pre>
+</div>
+<div id="data-overview" class="section level3">
+<h3>data overview</h3>
+<pre class="r"><code>## save as a data frame
+df &lt;- trees
+
+## check structure of df
+head(df)</code></pre>
+<pre><code>##   Girth Height Volume
+## 1   8.3     70   10.3
+## 2   8.6     65   10.3
+## 3   8.8     63   10.2
+## 4  10.5     72   16.4
+## 5  10.7     81   18.8
+## 6  10.8     83   19.7</code></pre>
+<p>dimension of df</p>
+<pre class="r"><code>dim(df)</code></pre>
+<pre><code>## [1] 31  3</code></pre>
+<p>row number= 31, column number = 3.</p>
+<p>
+data fromat
+</p>
+<pre class="r"><code>str(df)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    31 obs. of  3 variables:
+##  $ Girth : num  8.3 8.6 8.8 10.5 10.7 10.8 11 11 11.1 11.2 ...
+##  $ Height: num  70 65 63 72 81 83 66 75 80 75 ...
+##  $ Volume: num  10.3 10.3 10.2 16.4 18.8 19.7 15.6 18.2 22.6 19.9 ...</code></pre>
+<p>all three columns are numerical</p>
+</div>
+<div id="column-names" class="section level3">
+<h3>column names</h3>
+<pre class="r"><code>colnames(df)</code></pre>
+<pre><code>## [1] &quot;Girth&quot;  &quot;Height&quot; &quot;Volume&quot;</code></pre>
+</div>
+<div id="row-names" class="section level3">
+<h3>row names</h3>
+<pre class="r"><code>rownames(df)</code></pre>
+<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot;
+## [15] &quot;15&quot; &quot;16&quot; &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot; &quot;23&quot; &quot;24&quot; &quot;25&quot; &quot;26&quot; &quot;27&quot; &quot;28&quot;
+## [29] &quot;29&quot; &quot;30&quot; &quot;31&quot;</code></pre>
+<p>Sometimes, some dataset has row names</p>
+</div>
+<div id="select-one-row" class="section level3">
+<h3>select one row</h3>
+<p>select row 1</p>
+<pre class="r"><code>df[1,]</code></pre>
+<pre><code>##   Girth Height Volume
+## 1   8.3     70   10.3</code></pre>
+</div>
+<div id="select-multiple-rows" class="section level3">
+<h3>select multiple rows</h3>
+<p>select row 1 and 3</p>
+<pre class="r"><code>df[c(1,3),]</code></pre>
+<pre><code>##   Girth Height Volume
+## 1   8.3     70   10.3
+## 3   8.8     63   10.2</code></pre>
+</div>
+<div id="select-one-column" class="section level3">
+<h3>select one column</h3>
+select column1
+<em>
+<p>
+METHOD1:
+</P>
+<p></em></p>
+<pre class="r"><code>df[,1]</code></pre>
+<pre><code>##  [1]  8.3  8.6  8.8 10.5 10.7 10.8 11.0 11.0 11.1 11.2 11.3 11.4 11.4 11.7
+## [15] 12.0 12.9 12.9 13.3 13.7 13.8 14.0 14.2 14.5 16.0 16.3 17.3 17.5 17.9
+## [29] 18.0 18.0 20.6</code></pre>
+<em>
+<p>
+METHOD2:
+</P>
+<p></em></p>
+<pre class="r"><code>df$Girth</code></pre>
+<pre><code>##  [1]  8.3  8.6  8.8 10.5 10.7 10.8 11.0 11.0 11.1 11.2 11.3 11.4 11.4 11.7
+## [15] 12.0 12.9 12.9 13.3 13.7 13.8 14.0 14.2 14.5 16.0 16.3 17.3 17.5 17.9
+## [29] 18.0 18.0 20.6</code></pre>
+</div>
+<div id="select-multiple-columns" class="section level3">
+<h3>select multiple columns</h3>
+<p>select column 1 and column 2</p>
+<pre class="r"><code>df[,c(1,2)]</code></pre>
+</div>
+<div id="delete-one-row-with-row-number" class="section level3">
+<h3>delete one row with row number</h3>
+<p>delete row 5</p>
+<pre class="r"><code>df[-5,]</code></pre>
+</div>
+<div id="delete-multiple-row-with-row-number" class="section level3">
+<h3>delete multiple row with row number</h3>
+<p>delete row 5,8,12,24</p>
+<pre class="r"><code>df[-c(5,8,12,24),]</code></pre>
+</div>
+<div id="delete-the-first-10-rows" class="section level3">
+<h3>delete the first 10 rows</h3>
+<pre class="r"><code>tail(df,nrow(df)-10)</code></pre>
+</div>
+<div id="delete-the-last-10-rows" class="section level3">
+<h3>delete the last 10 rows</h3>
+<pre class="r"><code>head(df,nrow(df)-10)</code></pre>
+</div>
+<div id="keep-rows-which-column-girth-12" class="section level3">
+<h3>keep rows which column Girth &gt; 12</h3>
+<pre class="r"><code>df[which(df$Girth &gt; 12),]</code></pre>
+<pre><code>##    Girth Height Volume
+## 16  12.9     74   22.2
+## 17  12.9     85   33.8
+## 18  13.3     86   27.4
+## 19  13.7     71   25.7
+## 20  13.8     64   24.9
+## 21  14.0     78   34.5
+## 22  14.2     80   31.7
+## 23  14.5     74   36.3
+## 24  16.0     72   38.3
+## 25  16.3     77   42.6
+## 26  17.3     81   55.4
+## 27  17.5     82   55.7
+## 28  17.9     80   58.3
+## 29  18.0     80   51.5
+## 30  18.0     80   51.0
+## 31  20.6     87   77.0</code></pre>
+</div>
+<div id="keep-rows-which-column-girth-12-and-15" class="section level3">
+<h3>keep rows which column Girth &gt; 12 and &lt; 15</h3>
+<pre class="r"><code>df$Girth &gt;12</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [12] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [23]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre class="r"><code>df$Girth &lt; 15</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [23]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>df[df$Girth &gt;12 &amp; df$Girth &lt; 15,]</code></pre>
+<pre><code>##    Girth Height Volume
+## 16  12.9     74   22.2
+## 17  12.9     85   33.8
+## 18  13.3     86   27.4
+## 19  13.7     71   25.7
+## 20  13.8     64   24.9
+## 21  14.0     78   34.5
+## 22  14.2     80   31.7
+## 23  14.5     74   36.3</code></pre>
+</div>
+<div id="keep-rows-which-column-girth-10-or-18" class="section level3">
+<h3>keep rows which column Girth &lt; 10 or &gt; 18</h3>
+<pre class="r"><code>df[df$Girth &lt; 10 | df$Girth &gt; 18 ,]</code></pre>
+<pre><code>##    Girth Height Volume
+## 1    8.3     70   10.3
+## 2    8.6     65   10.3
+## 3    8.8     63   10.2
+## 31  20.6     87   77.0</code></pre>
+</div>
+<div id="sort-by-column2-height-increasing" class="section level3">
+<h3>sort by column2: Height, increasing</h3>
+<pre class="r"><code>df[order(df$Height)] </code></pre>
+</div>
+<div id="sort-by-column2-height-decreasing" class="section level3">
+<h3>sort by column2: Height, decreasing</h3>
+<pre class="r"><code>df[order(df$Height),decreasing = TRUE] </code></pre>
+</div>
+<div id="build-a-new-data-frame-nrow-5-ncol-3" class="section level3">
+<h3>build a new data frame, nrow = 5, ncol = 3</h3>
+<pre class="r"><code>new.df &lt;- data.frame(matrix(NA, nrow = 5, ncol = 3))
+new.df</code></pre>
+<pre><code>##   X1 X2 X3
+## 1 NA NA NA
+## 2 NA NA NA
+## 3 NA NA NA
+## 4 NA NA NA
+## 5 NA NA NA</code></pre>
+</div>
+<div id="set-column-names-for-new.df" class="section level3">
+<h3>set column names for new.df</h3>
+<pre class="r"><code>colnames(new.df) &lt;- paste(&quot;col&quot;, seq(1,3),sep  = &quot;_&quot;)
+new.df</code></pre>
+<pre><code>##   col_1 col_2 col_3
+## 1    NA    NA    NA
+## 2    NA    NA    NA
+## 3    NA    NA    NA
+## 4    NA    NA    NA
+## 5    NA    NA    NA</code></pre>
+</div>
+<div id="merge-df-and-new.df-by-row" class="section level3">
+<h3>merge df and new.df by row</h3>
+<p>make sure column names are the same</p>
+<pre class="r"><code>colnames(new.df) &lt;- colnames(df)
+rbind(df, new.df)</code></pre>
+<pre><code>##    Girth Height Volume
+## 1    8.3     70   10.3
+## 2    8.6     65   10.3
+## 3    8.8     63   10.2
+## 4   10.5     72   16.4
+## 5   10.7     81   18.8
+## 6   10.8     83   19.7
+## 7   11.0     66   15.6
+## 8   11.0     75   18.2
+## 9   11.1     80   22.6
+## 10  11.2     75   19.9
+## 11  11.3     79   24.2
+## 12  11.4     76   21.0
+## 13  11.4     76   21.4
+## 14  11.7     69   21.3
+## 15  12.0     75   19.1
+## 16  12.9     74   22.2
+## 17  12.9     85   33.8
+## 18  13.3     86   27.4
+## 19  13.7     71   25.7
+## 20  13.8     64   24.9
+## 21  14.0     78   34.5
+## 22  14.2     80   31.7
+## 23  14.5     74   36.3
+## 24  16.0     72   38.3
+## 25  16.3     77   42.6
+## 26  17.3     81   55.4
+## 27  17.5     82   55.7
+## 28  17.9     80   58.3
+## 29  18.0     80   51.5
+## 30  18.0     80   51.0
+## 31  20.6     87   77.0
+## 32    NA     NA     NA
+## 33    NA     NA     NA
+## 34    NA     NA     NA
+## 35    NA     NA     NA
+## 36    NA     NA     NA</code></pre>
+<p>There are many aspects of data frame manipulation, it is foundation of data analysis, many resources are online for unique quesitions. This page is just some basic functions.
+If you have any questions, welcome to contact me: <a href="mailto:fli105@syr.edu" class="email">fli105@syr.edu</a></p>
+</div>
